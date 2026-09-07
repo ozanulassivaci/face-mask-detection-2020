@@ -14,6 +14,8 @@ webcam stream, and each detected face is classified as wearing a mask or not.
   (`res10_300x300_ssd_iter_140000`)
 - Real-time inference on a webcam feed with bounding boxes and confidence
   scores drawn on each frame
+- On-screen summary of how many faces are visible and how many are wearing a
+  mask
 - Data augmentation during training (rotation, zoom, shift, shear, flip)
 
 ## Tech stack
@@ -70,7 +72,8 @@ python src/detect_mask_video.py
 ```
 
 Opens your default webcam, draws a bounding box and label ("Mask" / "No
-Mask") with a confidence percentage over each detected face. Press `q` to
+Mask") with a confidence percentage over each detected face, plus a summary
+line at the top of the frame ("Faces: 3  Mask: 2  No Mask: 1"). Press `q` to
 quit.
 
 ## Project structure

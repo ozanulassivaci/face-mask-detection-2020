@@ -97,6 +97,7 @@ while True:
 
 	# loop over the detected face locations and their corresponding
 	# locations
+	maskCount = 0
 	for (box, pred) in zip(locs, preds):
 		# unpack the bounding box and predictions
 		(startX, startY, endX, endY) = box
@@ -107,6 +108,9 @@ while True:
 		label = "Mask" if mask > withoutMask else "No Mask"
 		color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
+		if label == "Mask":
+			maskCount += 1
+
 		# include the probability in the label
 		label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
 
@@ -115,6 +119,13 @@ while True:
 		cv2.putText(frame, label, (startX, startY - 10),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+
+	# show a summary of how many faces were detected and how many of
+	# them are wearing a mask
+	summary = "Faces: {}  Mask: {}  No Mask: {}".format(
+		len(locs), maskCount, len(locs) - maskCount)
+	cv2.putText(frame, summary, (10, 20),
+		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
 	# show the output frame
 	cv2.imshow("Frame", frame)
